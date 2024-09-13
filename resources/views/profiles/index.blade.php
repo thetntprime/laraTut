@@ -33,7 +33,7 @@
                     @endif
                 </div>
                 <div style="padding-right: 3%;"><strong>{{ $user->profile->followers->count() }}</strong> 
-                    @if($user->posts->count()==1)
+                    @if($user->profile->followers->count()==1)
                         follower
                     @else
                         followers
