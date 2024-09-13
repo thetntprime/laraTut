@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Intervention\Image\Laravel\Facades\Image;
 
 class PostsController extends Controller
 {
@@ -24,6 +25,8 @@ class PostsController extends Controller
 
         $imagePath = request('image')->store('uploads', 'public');
 
+        $image = Image::read(public_path("storage/{$imagePath}"))->scale(1200, 1200);
+        $image->save();
 
         auth()->user()->posts()->create([
             'caption' => $data['caption'],
@@ -31,5 +34,9 @@ class PostsController extends Controller
         ]);
 
         return redirect('/profile/' . auth()->user()->id);
+    }
+
+    public function show(\App\Models\Post $post){
+        return view('posts.show', compact('post'));
     }
 }
