@@ -4,11 +4,19 @@
 <div class="container">
     <div class="row">
         <div class="col-3 p-5">
-            <img src="/storage/{{ $user->profile->image }}" alt="profile pic" class="rounded-circle" style="height: 120px">
+            <img src="{{ $user->profile->profileImage() }}" alt="profile pic" class="rounded-circle" style="height: 120px">
         </div>
         <div class="col-9 pt-5">
             <div class="d-flex justify-content-between align-items-baseline">
-                <h1>{{ $user->username }}</h1>
+
+                <div class="d-flex align-items-center">
+                    <h1>{{ $user->username }}</h1>
+                    
+                    @cannot('update', $user->profile)
+                        <follow-button user-id="{{ $user->id }}" follows="{{ $follows }}"></follow-button>
+                    @endcannot
+                </div>
+
                 @can('update', $user->profile)
                     <a href="/p/create">Add New Post</a>
                 @endcan
@@ -24,8 +32,14 @@
                         posts
                     @endif
                 </div>
-                <div style="padding-right: 3%;"><strong>2</strong> followers</div>
-                <div style="padding-right: 3%;"><strong>50</strong> following</div>
+                <div style="padding-right: 3%;"><strong>{{ $user->profile->followers->count() }}</strong> 
+                    @if($user->posts->count()==1)
+                        follower
+                    @else
+                        followers
+                    @endif
+                </div>
+                <div style="padding-right: 3%;"><strong>{{ $user->following->count() }}</strong> following</div>
             </div>
             <div class="pt-2" style="font-weight: bold;">{{ $user->profile->title }}</div>
             <div>{{ $user->profile->description }}</div>

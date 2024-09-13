@@ -10,7 +10,7 @@
             <div>
                 <div class="d-flex align-items-center">
                     <div class="pe-3">
-                        <img src="/storage/{{ $post->user->profile->image }}" alt="" class="rounded-circle" style="max-width:40px; margin-left:0;">
+                        <img src="{{ $post->user->profile->profileImage() }}" alt="" class="rounded-circle" style="max-width:40px; margin-left:0;">
                     </div>
                     <div>
                         <div style="font-weight:bold;">
