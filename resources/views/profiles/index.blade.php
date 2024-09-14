@@ -25,21 +25,21 @@
                 <a href="/profile/{{ $user->id }}/edit">Edit Profile</a>
             @endcan
             <div class="d-flex">
-                <div style="padding-right: 3%;"><strong>{{ $user->posts->count() }}</strong> 
+                <div style="padding-right: 3%;"><strong>{{ $postCount }}</strong> 
                     @if($user->posts->count()==1)
                         post
                     @else
                         posts
                     @endif
                 </div>
-                <div style="padding-right: 3%;"><strong>{{ $user->profile->followers->count() }}</strong> 
+                <div style="padding-right: 3%;"><strong>{{ $followerCount }}</strong> 
                     @if($user->profile->followers->count()==1)
                         follower
                     @else
                         followers
                     @endif
                 </div>
-                <div style="padding-right: 3%;"><strong>{{ $user->following->count() }}</strong> following</div>
+                <div style="padding-right: 3%;"><strong>{{ $followingCount }}</strong> following</div>
             </div>
             <div class="pt-2" style="font-weight: bold;">{{ $user->profile->title }}</div>
             <div>{{ $user->profile->description }}</div>
