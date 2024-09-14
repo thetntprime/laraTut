@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Cache;
 use Illuminate\Http\Request;
 use Intervention\Image\Laravel\Facades\Image;
 use \App\Models\User;
@@ -18,7 +19,28 @@ class ProfilesController extends Controller
     {
         $follows = (auth()->user()) ? auth()->user()->following->contains($user->id) : false;
 
-        return view('profiles/index', compact('user', 'follows'));
+        $postCount = Cache::remember('count.posts.' . $user->id, 
+        now()->addSeconds(30), 
+        function() use ($user) {
+            return $user->posts->count();
+        });
+
+        $followerCount = Cache::remember('count.followers.' . $user->id, 
+        now()->addSeconds(30), 
+        function() use ($user) {
+            return $user->profile->followers->count();
+        });
+
+        
+        $followingCount = Cache::remember('count.following.' . $user->id, 
+        now()->addSeconds(30), 
+        function() use ($user) {
+            return $user->following->count();
+        });
+        
+
+        return view('profiles/index', compact('user', 'follows', 'postCount', 
+        'followerCount', 'followingCount'));
     }
 
     public function edit(User $user){   
