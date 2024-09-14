@@ -27,7 +27,7 @@
                 })
                 .catch(errors=>{
                     if (errors.response.status == 401){
-                        window.locaiton = '/login/';
+                        window.location = '/login';
                     }
                 });
             }
