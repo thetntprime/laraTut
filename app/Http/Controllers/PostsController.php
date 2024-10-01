@@ -18,7 +18,14 @@ class PostsController extends Controller
     public function index(){
         $users = auth()->user()->following()->pluck('profiles.user_id');
 
-        $posts = Post::whereIn('user_id', $users)->with('user')->latest()->paginate(5);
+        if (request()->has('search')){
+            $posts = Post::where('caption','like', '%' . request()->get('search', '') . '%');
+        }
+        else{
+            $posts = Post::whereIn('user_id', $users)->with('user')->latest();
+        }
+
+        $posts = $posts->paginate(5);
 
         return view('posts/index', compact('posts'));
     }

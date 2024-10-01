@@ -56,6 +56,8 @@ class User extends Authenticatable
                 $user->profile()->create([
                     'title' => $user->username,
                 ]);
+
+                
             });
     }
 
