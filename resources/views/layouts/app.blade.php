@@ -28,6 +28,11 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+                @auth
+                    <!--users should only be able to see this if logged in-->
+                    @include('layouts.search-bar')
+                @endauth    
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
@@ -79,18 +84,6 @@
                             <li class="nav-item dropdown">
 
                             </li>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
                         @endguest
                     </ul>
                 </div>
